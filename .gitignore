@@ -1,7 +1,7 @@
+# 忽略llm-basics里面的对话文件
+llm-basics/message.json
+
+# 通用Python项目忽略规则
 .venv/
-
 __pycache__/
-
 .env
-
-message.json
