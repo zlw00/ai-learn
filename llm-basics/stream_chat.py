@@ -1,6 +1,4 @@
 import os
-from xmlrpc import client
-
 from dotenv import load_dotenv
 from pathlib import Path
 import streamlit as st
