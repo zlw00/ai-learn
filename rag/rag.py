@@ -26,6 +26,18 @@ def split_text(text, source):
         if chunk.strip()
     ]
 
+def split_text_new(text, source):
+    chunks = text.split("\n\n")
+
+    return [
+        {
+            "content": chunk.strip(),
+            "source": source,
+        }
+        for chunk in chunks
+        if chunk.strip()
+    ]
+
 
 def search(keywords, chunks):
     results = []

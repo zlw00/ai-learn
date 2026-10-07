@@ -16,7 +16,7 @@ class Retriever:
             self.metadata = json.load(f)
 
 
-    def search(self, question, top_k):
+    def search(self, question, top_k, threshold=0.8):
         question_vector = self.model.encode(question)
         question_vector = np.array(
             [question_vector]
@@ -26,13 +26,16 @@ class Retriever:
 
         results = []
         for dist, idx in zip(distances[0], indices[0]):
-            results.append(
-                {
-                    "content":self.metadata[idx]["content"],
-                    "source":self.metadata[idx]["source"],
-                    "score":float(dist),
-                }
-            )
+            if idx == -1:
+                continue
+            if dist < threshold:
+                results.append(
+                    {
+                        "content":self.metadata[idx]["content"],
+                        "source":self.metadata[idx]["source"],
+                        "score":float(dist),
+                    }
+                )
         return results
 
 

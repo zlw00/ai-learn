@@ -3,7 +3,7 @@ import rag
 
 class Generator:
 
-    def __index__(self, model, client):
+    def __init__(self, model, client):
         self.model = model
         self.client = client
 
@@ -13,6 +13,9 @@ class Generator:
         question,
         results
     ):
+        if not results:
+            return "知识库中没有找到相关信息"
+
         context = "\n".join(
             [
                 item["content"]
