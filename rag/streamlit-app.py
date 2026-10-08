@@ -1,6 +1,5 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-
 from retriever import Retriever
 from generator import Generator
 from dotenv import load_dotenv
@@ -8,12 +7,15 @@ import os
 from zhipuai import ZhipuAI
 from pathlib import Path
 from index_builder import build_index
+from query_rewriter import QueryRewriter
 
 load_dotenv()
 MODEL = "glm-4-flash"
 key = os.getenv("ZHIPU_API_KEY")
 client = ZhipuAI(api_key=key)
 st.title("企业知识库问答助手")
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 @st.cache_resource
 def load_embedding_model():
@@ -54,13 +56,35 @@ generator = Generator(
     MODEL,
     client
 )
+query_rewriter = QueryRewriter(client, MODEL)
 
 if st.button("查询"):
-    results = retriever.search(question, 3)
-    answer = generator.generate_answer(question, results)
+    st.session_state.messages.append({
+        "role": "user",
+        "content": question
+    })
+    history = "\n".join(
+        [
+            f"{item['role']}:{item['content']}"
+            for item in st.session_state.messages
+        ]
+    )
+    rewritten_question = query_rewriter.rewrite(history, question)
+
+    results = retriever.search(rewritten_question, 3)
+    answer = generator.generate_answer(rewritten_question, results)
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": answer
+    })
+    st.write(
+        "改写后的问题:",
+        rewritten_question
+    )
     st.write(
         answer
     )
+    st.write(st.session_state.messages)
     if results:
         st.subheader(
             "参考来源"

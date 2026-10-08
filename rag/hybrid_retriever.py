@@ -1,6 +1,7 @@
 from bm25_retriever import Bm25Retriever
 from retriever import Retriever
 from sentence_transformers import SentenceTransformer
+from reranker import Reranker
 
 
 class HybridRetriever:
@@ -57,4 +58,7 @@ if __name__ == '__main__':
 
     # 融合后的结果输出
     results = hybridRetriever.search(question)
-    print(results)
+    reranker = Reranker()
+    results = reranker.reranker(question, results,top_k=2)
+    for result in results:
+        print(result)
