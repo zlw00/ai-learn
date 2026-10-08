@@ -38,6 +38,23 @@ def split_text_new(text, source):
         if chunk.strip()
     ]
 
+def split_text_opt(text, chunk_size, overlap, source):
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = start + chunk_size
+        chunks.append(text[start:end])
+        start = end - overlap
+
+    return [
+        {
+            "content": chunk.strip(),
+            "source": source,
+        }
+        for chunk in chunks
+        if chunk.strip()
+    ]
+
 
 def search(keywords, chunks):
     results = []

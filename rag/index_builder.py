@@ -10,8 +10,8 @@ model = SentenceTransformer(
 )
 def build_index(file_path):
     text = Path(file_path).read_text(encoding="utf-8")
-    chunks = rag.split_text_new(
-        text,
+    chunks = rag.split_text_opt(
+        text,10,5,
         Path(file_path).name
     )
     embeddings = np.array(

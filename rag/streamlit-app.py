@@ -15,19 +15,15 @@ key = os.getenv("ZHIPU_API_KEY")
 client = ZhipuAI(api_key=key)
 st.title("企业知识库问答助手")
 
-
 @st.cache_resource
 def load_embedding_model():
     return SentenceTransformer(
         "BAAI/bge-small-zh-v1.5"
     )
 
-
 model = load_embedding_model()
 index_path = "index/faiss_index"
 metadata_path = "index/metadata.json"
-
-
 
 uploaded_file = st.file_uploader("上传知识库文件", type=["txt"])
 if uploaded_file:
