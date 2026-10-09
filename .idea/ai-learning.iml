@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/llm-basics/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/rag-fastapi/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/rag/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/agent/.venv" />
     </content>
     <orderEntry type="jdk" jdkName="~/PycharmProjects/ai-learning/.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
