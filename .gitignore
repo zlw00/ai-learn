@@ -10,3 +10,6 @@ __pycache__/
 
 rag/index/
 rag/knowledge/
+
+rag-fastapi/index/
+rag-fastapi/knowledge/
